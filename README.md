@@ -1,123 +1,153 @@
 # MarkShield — Student Marks Protection System
 
-A command-line, menu-driven Python application with SQLite for transparent and secure academic marks management.
+> *Because every mark matters, and every student deserves transparency.*
+
+MarkShield is a command-line Python application built to bring trust, accountability, and fairness to academic marks management. No more lost corrections, unexplained grade changes, or unanswered disputes — MarkShield keeps everyone in the loop, every step of the way.
 
 ---
 
-## 🚀 Quick Start
+## What Makes MarkShield Different?
 
-**Requirements:** Python 3.7+ — no external packages needed (uses standard library only)
+Most mark systems just store numbers. MarkShield goes further:
+
+- **Full audit trail** — every mark entry, change, and correction is logged with a timestamp and the name of who did it
+- **Student-powered flagging** — students can raise discrepancy flags directly, no need to chase down lecturers
+- **Correction workflow** — lecturers request corrections, admins review them, students get notified
+- **Built-in notifications** — no one is left wondering what happened to their request
+- **Wellness check-ins** — because academic pressure is real, and we care about more than just grades
+
+---
+
+## Getting Started
+
+**All you need is Python 3.7+** — no pip installs, no virtual environments, no fuss.
 
 ```bash
-# 1. Clone the repository
-git clone <your-repo-url>
-cd markshield
+# 1. Clone the repo
+git clone https://github.com/k-kuol/MarkShield-System.git
+cd MarkShield-System
 
-# 2. Run the application
+# 2. Run it
 python main.py
 ```
 
-On first run, a default admin account is automatically created:
+On first launch, MarkShield sets itself up automatically — database, tables, and a default admin account, all ready to go.
 
-| Username | Password  |
-|----------|-----------|
+| Username | Password   |
+|----------|------------|
 | `admin`  | `admin123` |
+
+> Change the admin password after your first login.
 
 ---
 
-## 📁 Project Structure
+## Who Uses MarkShield?
+
+### Students
+You finally have a voice. Log in to:
+- View your marks and full mark history
+- Check your GPA and academic standing
+- Flag a mark that doesn't look right
+- Track the status of your flags
+- Do a wellness check-in when things get tough
+- Stay updated with notifications
+
+### Lecturers
+Your workflow, simplified:
+- Enter and manage student marks
+- Request corrections when mistakes happen
+- Track the status of your correction requests
+- Get notified when requests are reviewed
+
+### Academic Administrators
+Full oversight, full control:
+- Review and approve or reject correction requests
+- Investigate flagged discrepancies
+- Browse the complete audit trail
+- Generate reports on GPA, course performance, and flag statistics
+- Keep everyone informed through the notification system
+
+---
+
+## Project Structure
 
 ```
 markshield/
-├── main.py          # Entry point and menu controller
-├── database.py      # DB connection, schema, and seeding
-├── auth.py          # Registration and login (SHA-256 hashing)
-├── marks.py         # Mark entry, flagging, and corrections
-├── gpa.py           # GPA calculation and academic summary
-├── wellness.py      # Wellness check-in and history
-├── notifications.py # Notification generation and delivery
-├── audit.py         # Audit trail logging and viewing
-├── reports.py       # Admin report generation
-├── config.py        # All system constants (grades, thresholds)
+├── main.py            # App entry point and all role menus
+├── database.py        # Schema setup, seeding, and DB connection
+├── auth.py            # Registration and login with SHA-256 hashing
+├── marks.py           # Mark entry, flagging, corrections
+├── gpa.py             # GPA calculation and academic summary
+├── wellness.py        # Wellness check-ins and history
+├── notifications.py   # Notification system
+├── audit.py           # Audit trail logging and viewing
+├── reports.py         # Admin report generation
+├── config.py          # Grading scale and system constants
 └── README.md
 ```
 
-> `markshield.db` is auto-created on first run and is excluded from version control via `.gitignore`.
+> `markshield.db` is auto-generated on first run and is excluded from version control — your data stays local.
 
 ---
 
-## 👥 Roles & Menus
+## Under the Hood
 
-### 🎓 Student
-- View marks, GPA summary, and mark history
-- Flag a mark discrepancy and track flag status
-- Wellness check-in and history
-- View notifications
+MarkShield uses **SQLite** — lightweight, serverless, and perfect for a system like this.
 
-### 👨‍🏫 Lecturer
-- Enter student marks
-- View submitted marks
-- Request mark corrections and track their status
-- View notifications
-
-### 🛡️ Academic Administrator
-- Review and approve/reject correction requests
-- Investigate and resolve flagged discrepancies
-- View full system audit trail
-- Generate reports (GPA summary, course performance, flag stats)
-- View notifications
+| Table | What it stores |
+|-------|----------------|
+| `users` | All accounts — students, lecturers, admins |
+| `marks` | Student marks with grades, credit hours, and lecturer info |
+| `flags` | Discrepancy flags raised by students |
+| `correction_requests` | Correction requests submitted by lecturers |
+| `notifications` | Per-user inbox with read/unread status |
+| `audit_trail` | Every action, timestamped and attributed |
+| `wellness_checkins` | Student mood and stress records |
 
 ---
 
-## 🗄️ Database Schema
+## Security
 
-| Table | Purpose |
-|-------|---------|
-| `users` | All user accounts with hashed passwords and roles |
-| `marks` | Student marks with grade, credit hours, and lecturer |
-| `flags` | Student-raised discrepancy flags |
-| `correction_requests` | Lecturer-submitted correction requests |
-| `notifications` | Per-user notification inbox with read status |
-| `audit_trail` | Timestamped log of all system actions |
-| `wellness_checkins` | Student mood and stress check-in records |
+We take data integrity seriously:
+
+- Passwords are hashed with **SHA-256** — never stored in plain text
+- **Role-Based Access Control (RBAC)** — each role only sees what they're supposed to
+- Every mark change is recorded in the **audit trail** — nothing gets quietly edited
+- **Foreign key constraints** enforced at the database level
 
 ---
 
-## 🔐 Security
-
-- Passwords hashed with **SHA-256** before storage
-- **Role-Based Access Control (RBAC)** — users only see their own menus
-- All mark changes logged in the **audit trail** with timestamp and actor
-- SQLite **foreign key constraints** enforced
-
----
-
-## 📊 Grading Scale
+## Grading Scale
 
 | Score | Grade | GPA Points |
 |-------|-------|------------|
-| 90–100 | A+ | 4.0 |
-| 85–89  | A  | 4.0 |
-| 80–84  | A- | 3.7 |
-| 75–79  | B+ | 3.3 |
-| 70–74  | B  | 3.0 |
-| 65–69  | B- | 2.7 |
-| 60–64  | C+ | 2.3 |
-| 55–59  | C  | 2.0 |
-| 50–54  | C- | 1.7 |
-| 45–49  | D  | 1.0 |
-| 0–44   | F  | 0.0 |
+| 90–100 | A+   | 4.0 |
+| 85–89  | A    | 4.0 |
+| 80–84  | A-   | 3.7 |
+| 75–79  | B+   | 3.3 |
+| 70–74  | B    | 3.0 |
+| 65–69  | B-   | 2.7 |
+| 60–64  | C+   | 2.3 |
+| 55–59  | C    | 2.0 |
+| 50–54  | C-   | 1.7 |
+| 45–49  | D    | 1.0 |
+| 0–44   | F    | 0.0 |
 
 ---
 
-## 👨‍💻 Team
+## The Team — Group 20
 
-| Name | Student ID | GitHub |
-|------|-----------|--------|
-|      |           |        |
-|      |           |        |
-|      |           |        |
+Names:
+1. Kuol Akech                     
+2. Divin Manzi                  
+3. Esther Konde
+4. Umutesi Maureen
+5. Karen Musangwa               
 
 ---
 
-*Built as part of the Peer Learning Project (PLP) — Trimester 2*
+## Project Info
+
+Built as part of the **Peer Learning Project (PLP) — Trimester 2**
+
+> *MarkShield was built by students, for students. We know how much a single mark can mean — that's why we built a system that protects every single one.*
