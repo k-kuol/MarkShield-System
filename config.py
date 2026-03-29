@@ -1,6 +1,3 @@
-
-Memo
-Highlight
 # Grade thresholds: (minimum_score, grade_letter)
 GRADE_SCALE = [
     (90, "A+"), (85, "A"), (80, "A-"),
